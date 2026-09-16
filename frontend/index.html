@@ -50,9 +50,9 @@
         }
 
         body {
+            background: linear-gradient(135deg, #c0e0ec, #d1c8e6, #bfe6d6);
             min-height: 100vh;
             color: #25294a;
-            background: linear-gradient(135deg, #c0e0ec, #d1c8e6, #bfe6d6);
             overflow-x: hidden;
             background-attachment: fixed;
         }
@@ -177,7 +177,7 @@
         .navbar {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 14px;
             padding: 12px 30px;
             background: rgb(231, 231, 245);
             border-bottom: 1px solid #edf1f5;
@@ -277,17 +277,6 @@
             animation: pageIn .35s ease;
         }
         .page.active { display: block; }
-
-        .app.continuous-mode .page {
-            display: block;
-            min-height: auto;
-            padding-top: 50px;
-            padding-bottom: 50px;
-            scroll-margin-top: 85px;
-        }
-        .app.continuous-mode .page + .page {
-            border-top: 1px solid rgba(120, 145, 170, .14);
-        }
 
         @keyframes pageIn {
             from { opacity: 0; transform: translateY(15px); }
@@ -713,7 +702,7 @@
         <!-- HEADER -->
         <header class="header">
             <div class="logo">
-                <div class="logo-icon">AI</div>
+                <div class="logo-icon">CA</div>
                 <div>FIND THE BEST FOR YOU</div>
             </div>
 
@@ -737,7 +726,7 @@
             </div>
         </header>
 
-        <!-- NAVIGATION (INCLUDES DIRECT LOGIN/REGISTER TAB) -->
+        <!-- NAVIGATION -->
         <nav class="navbar">
             <button class="nav-link active" data-page="home">Home</button>
             <button class="nav-link" data-page="dashboard">Dashboard</button>
@@ -745,8 +734,8 @@
             <button class="nav-link" data-page="cards">Government Cards</button>
             <button class="nav-link" data-page="eligibilityPlus">Eligibility Plus</button>
             <button class="nav-link" data-page="channelPartner">Nearest Channel Partner</button>
-            <button class="nav-link" data-page="profile">My Profile</button>
-            <button class="nav-link" data-page="loginPage">Login / Register</button>
+            <button class="nav-link" data-page="profile" id="navProfileBtn" style="display:none;">My Profile</button>
+            <button class="nav-link" data-page="loginPage" id="navAuthBtn">Login / Register</button>
             <button class="nav-link" data-page="feedback">Feedback</button>
 
             <div class="notification-wrap">
@@ -910,7 +899,7 @@
             </div>
         </section>
 
-        <!-- 3. GOVERNMENT CARDS PAGE (ALL 8 CARDS PRESERVED) -->
+        <!-- 3. GOVERNMENT CARDS PAGE -->
         <section class="page" id="cards">
             <div style="text-align:center;margin-bottom:24px;">
                 <div class="badge">DOCUMENT READY</div>
@@ -920,7 +909,7 @@
             <div class="cards-grid" id="governmentCardsGrid"></div>
         </section>
 
-        <!-- 4. ADVANCED ELIGIBILITY PAGE (ALL 14 FIELDS PRESERVED) -->
+        <!-- 4. ADVANCED ELIGIBILITY PAGE -->
         <section class="page" id="eligibilityPlus">
             <div style="text-align:center;margin-bottom:24px;">
                 <div class="badge">SMART ELIGIBILITY ENGINE</div>
@@ -951,7 +940,7 @@
             </section>
         </section>
 
-        <!-- 5. NEAREST CHANNEL PARTNER PAGE (LEAFLET + GOOGLE MAPS + GPS) -->
+        <!-- 5. NEAREST CHANNEL PARTNER PAGE -->
         <section class="page" id="channelPartner">
             <div style="text-align:center;margin-bottom:24px;">
                 <div class="badge">CHANNEL PARTNER LOCATOR</div>
@@ -1032,7 +1021,7 @@
             </section>
         </section>
 
-        <!-- 7. SCHEMES EXPLORE PAGE (ALL 10 SECTORS PRESERVED) -->
+        <!-- 7. SCHEMES EXPLORE PAGE -->
         <section class="page" id="schemes">
             <div style="text-align:center;margin-bottom:24px;">
                 <div class="badge">✦ DISCOVER SCHEMES</div>
@@ -1052,7 +1041,7 @@
             </div>
         </section>
 
-        <!-- 8. LOGIN & REGISTER PAGE (RESTORED COMPLETE AUTH) -->
+        <!-- 8. LOGIN & REGISTER PAGE -->
         <section class="page" id="loginPage">
             <div class="auth-wrap">
                 <div class="auth-card">
@@ -1103,7 +1092,7 @@
                     <div class="avatar" id="profileAvatar">U</div>
                     <div>
                         <h1 id="profileName">User Profile</h1>
-                        <p style="color:#64748b;font-size:13px;">Your CreditAccess Registered Account</p>
+                        <p id="profileEmailSubtitle" style="color:#64748b;font-size:13px;">Your CreditAccess Registered Account</p>
                     </div>
                 </div>
                 <div class="stats-grid">
@@ -1141,33 +1130,48 @@
         <button class="menu-link" onclick="openPage('cards')">🪪 Government Cards</button>
         <button class="menu-link" onclick="openPage('eligibilityPlus')">🎯 Eligibility Plus</button>
         <button class="menu-link" onclick="openPage('channelPartner')">📍 Channel Partners</button>
-        <button class="menu-link" onclick="openPage('loginPage')">🔐 Login / Register</button>
-        <button class="menu-link" onclick="openPage('profile')">👤 My Profile</button>
+        <button class="menu-link" onclick="openPage('profile')" id="menuProfileBtn" style="display:none;">👤 My Profile</button>
+        <button class="menu-link" onclick="openPage('loginPage')" id="menuAuthBtn">🔐 Login / Register</button>
         <button class="menu-link" onclick="openPage('feedback')">💬 Feedback</button>
     </div>
 
     <div class="toast" id="toast"></div>
 
-    <!-- JAVASCRIPT (PRESERVED LOGIC + REBRANDED AI + LIVE API) -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         /* 1. ALL 13 REGIONAL LANGUAGES */
         const translations = {
             en: { languageLabel: "Please select your language", home: "Home", dashboard: "Dashboard", schemes: "Schemes", profile: "My Profile", badge: "AI Powered Scheme Finder", heading: 'Tell us a little about yourself — <span class="gradient-text">we\'ll find the best scheme for you.</span>', description: "Find suitable government schemes and financial assistance with the help of FIND THE BEST FOR YOU.", placeholder: "Type your question or search for a scheme...", voice: "Ask your question using voice", footer: "FIND THE BEST FOR YOU | Making Government Schemes Easier to Access" },
-            hi: { languageLabel: "अपनी भाषा चुनें", home: "होम", dashboard: "डैशबोर्ड", schemes: "योजनाएँ", profile: "मेरी प्रोफ़ाइल", badge: "AI आधारित योजना खोजक", heading: 'अपने बारे में थोड़ा बताइए — <span class="gradient-text">हम आपके लिए सबसे अच्छी योजना खोजेंगे।</span>', description: "FIND THE BEST FOR YOU की सहायता से अपने लिए उपयुक्त सरकारी योजना और वित्तीय सहायता खोजें।", placeholder: "अपना प्रश्न लिखें या योजना खोजें...", voice: "आवाज़ से अपना प्रश्न पूछें", footer: "FIND THE BEST FOR YOU | सरकारी योजनाओं तक आसान पहुँच" },
-            bn: { languageLabel: "আপনার ভাষা নির্বাচন করুন", home: "হোম", dashboard: "ড্যাশবোর্ড", schemes: "প্রকল্পসমূহ", profile: "আমার প্রোফাইল", badge: "AI চালিত প্রকল্প অনুসন্ধানকারী", heading: 'আপনার সম্পর্কে একটু বলুন — <span class="gradient-text">আমরা আপনার জন্য সেরা প্রকল্প খুঁজে দেব।</span>', description: "FIND THE BEST FOR YOU-এর সাহায্যে আপনার জন্য উপযুক্ত সরকারি প্রকল্প ও আর্থিক সহায়তা খুঁজুন。", placeholder: "আপনার প্রশ্ন লিখুন বা একটি প্রকল্প খুঁজুন...", voice: "ভয়েসের মাধ্যমে প্রশ্ন করুন", footer: "FIND THE BEST FOR YOU | সরকারি প্রকল্পে সহজ প্রবেশাধিকার" },
-            mr: { languageLabel: "तुमची भाषा निवडा", home: "मुख्यपृष्ठ", dashboard: "डॅशबोर्ड", schemes: "योजना", profile: "माझे प्रोफाइल", badge: "AI आधारित योजना शोधक", heading: 'तुमच्याबद्दल थोडे सांगा — <span class="gradient-text">आम्ही तुमच्यासाठी सर्वोत्तम योजना शोधू.</span>', description: "FIND THE BEST FOR YOU च्या मदतीने तुमच्यासाठी योग्य सरकारी योजना आणि आर्थिक मदत शोधा.", placeholder: "तुमचा प्रश्न लिहा किंवा योजना शोधा...", voice: "आवाजाद्वारे प्रश्न विचारा", footer: "FIND THE BEST FOR YOU | सरकारी योजनांपर्यंत सुलभ प्रवेश" },
-            ta: { languageLabel: "உங்கள் மொழியைத் தேர்ந்தெடுக்கவும்", home: "முகப்பு", dashboard: "டாஷ்போர்டு", schemes: "திட்டங்கள்", profile: "எனது சுயவிவரம்", badge: "AI திட்ட தேடுபொறி", heading: 'உங்களைப் பற்றி கொஞ்சம் சொல்லுங்கள் — <span class="gradient-text">உங்களுக்கான சிறந்த திட்டத்தை நாங்கள் கண்டுபிடிப்போம்.</span>', description: "FIND THE BEST FOR YOU உதவியுடன் உங்களுக்கான பொருத்தமான அரசு திட்டங்களையும் நிதி உதவிகளையும் கண்டறியுங்கள்.", placeholder: "உங்கள் கேள்வியை உள்ளிடவும் அல்லது திட்டத்தைத் தேடவும்...", voice: "குரல் மூலம் கேள்வி கேளுங்கள்", footer: "FIND THE BEST FOR YOU | அரசு திட்டங்களை எளிதாக அணுகலாம்" },
-            te: { languageLabel: "మీ భాషను ఎంచుకోండి", home: "హోమ్", dashboard: "డాష్‌బోర్డ్", schemes: "పథకాలు", profile: "నా ప్రొఫైల్", badge: "AI ఆధారిత పథకం శోధన", heading: 'మీ గురించి కొంచెం చెప్పండి — <span class="gradient-text">మీ కోసం ఉత్తమ పథకాన్ని మేము కనుగొంటాము.</span>', description: "FIND THE BEST FOR YOU సహాయంతో మీకు సరైన ప్రభుత్వ పథకాలు మరియు ఆర్థిక సహాయాన్ని కనుగొనండి.", placeholder: "మీ ప్రశ్నను టైప్ చేయండి లేదా పథకాన్ని శోధించండి...", voice: "వాయిస్ ద్వారా ప్రశ్న అడగండి", footer: "FIND THE BEST FOR YOU | ప్రభుత్వ పథకాలకు సులభమైన ప్రాప్యత" }
+            hi: { languageLabel: "अपनी भाषा चुनें", home: "होम", dashboard: "डैशबोर्ड", schemes: "योजनाएँ", profile: "मेरी प्रोफ़ाइल", badge: "AI आधारित योजना खोजक", heading: 'अपने बारे में थोड़ा बताइए — <span class="gradient-text">हम आपके लिए सबसे अच्छी योजना खोजेंगे।</span>', description: "FIND THE BEST FOR YOU की सहायता से अपने लिए उपयुक्त सरकारी योजना और वित्तीय सहायता खोजें।", placeholder: "अपना प्रश्न लिखें या योजना खोजें...", voice: "आवाज़ से अपना प्रश्न पूछें", footer: "FIND THE BEST FOR YOU | सरकारी योजनाओं तक आसान पहुँच" }
         };
 
-        /* 2. LOCAL STORAGE DATA */
-        let userData = JSON.parse(localStorage.getItem("smartSchemeUser")) || { name: "User", email: "user@creditaccess.in", password: "password" };
-        let savedSchemes = JSON.parse(localStorage.getItem("smartSchemeSaved")) || ["ASIIM", "Micro Finance Scheme"];
-        let applications = JSON.parse(localStorage.getItem("smartSchemeApplications")) || [{ scheme: "Micro Finance Scheme", match: 95, date: "17/09/2026", status: "Recommended" }];
-        let emiData = JSON.parse(localStorage.getItem("smartSchemeEMI")) || { loan: 140000, interest: 6.5, tenure: 60, emi: 2739 };
+        /* 2. AUTH & USER STATE (NO PRE-LOADED FAKE DATA) */
+        let currentUser = JSON.parse(localStorage.getItem("creditaccess_current_user") || "null");
+        let savedSchemes = JSON.parse(localStorage.getItem("smartSchemeSaved") || "[]");
+        let applications = JSON.parse(localStorage.getItem("smartSchemeApplications") || "[]");
+        let emiData = JSON.parse(localStorage.getItem("smartSchemeEMI") || '{"loan": 0, "interest": 0, "tenure": 0, "emi": 0}');
 
-        /* 3. GOVERNMENT CARDS DATA (ALL 8 COMPLETE CARDS) */
+        function updateAuthUI() {
+            const navProfileBtn = document.getElementById('navProfileBtn');
+            const navAuthBtn = document.getElementById('navAuthBtn');
+            const menuProfileBtn = document.getElementById('menuProfileBtn');
+            const menuAuthBtn = document.getElementById('menuAuthBtn');
+
+            if (currentUser && currentUser.email) {
+                if (navProfileBtn) navProfileBtn.style.display = 'inline-block';
+                if (navAuthBtn) navAuthBtn.style.display = 'none';
+                if (menuProfileBtn) menuProfileBtn.style.display = 'block';
+                if (menuAuthBtn) menuAuthBtn.style.display = 'none';
+                loadProfile();
+            } else {
+                if (navProfileBtn) navProfileBtn.style.display = 'none';
+                if (navAuthBtn) navAuthBtn.style.display = 'inline-block';
+                if (menuProfileBtn) menuProfileBtn.style.display = 'none';
+                if (menuAuthBtn) menuAuthBtn.style.display = 'block';
+            }
+        }
+
+        /* 3. GOVERNMENT CARDS DATA */
         const governmentCards = [
             { name: 'Udyam Registration Certificate', icon: '🏭', cardId: 'UDYAM', category: 'MSME / Business', caste: 'All Categories', documents: 'Aadhaar; applicable cases mein PAN & GSTIN', eligibility: 'Micro/Small/Medium Enterprise establish karne wala eligible person/enterprise', website: 'https://udyamregistration.gov.in/' },
             { name: 'Udyam Aakanksha / Unit Registration', icon: '🏢', cardId: 'UDYAM-AKANKSHA', category: 'Business / Industry', caste: 'As per State rules', documents: 'Applicant/business details, enterprise/project details & supporting documents', eligibility: 'Eligible industrial/business units under concerned state system', website: 'https://www.udyamregistration.gov.in/Udyam_Login.aspx' },
@@ -1217,11 +1221,11 @@
 
         function checkCardEligibility() {
             const res = document.getElementById('cardEligibilityResult');
-            res.innerHTML = `<h3 class="eligible">✓ You appear eligible to proceed</h3><p>Verify final criteria and apply through the official card link.</p>`;
+            res.innerHTML = `<h3 class="eligible">✓ Basic Eligibility Verified</h3><p>Based on your profile, you are eligible to apply. Please use the official card link.</p>`;
             res.classList.add('show');
         }
 
-        /* 4. CHANNEL PARTNER LOCATOR */
+        /* 4. CHANNEL PARTNER (LEAFLET + GOOGLE MAPS + GPS) */
         const channelPartners = [
             { name: 'Prayagraj SCA - Civil Lines', type: 'SCA', npa: '2.1%', fund: 'High', status: 'eligible', district: 'Prayagraj', lat: 25.4358, lng: 81.8463 },
             { name: 'Alambagh PNB Branch', type: 'PSB', npa: '3.5%', fund: 'Medium', status: 'eligible', district: 'Lucknow', lat: 26.8089, lng: 80.9111 },
@@ -1314,7 +1318,7 @@
             window.open(`https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}`, '_blank');
         }
 
-        /* 5. SMART SEARCH (RENDER LIVE API + NO GEMINI BRANDING) */
+        /* 5. SEARCH & LIVE AI (ZERO GEMINI BRANDING) */
         function setSearchInput(txt) {
             document.getElementById('searchInput').value = txt;
             performSearch();
@@ -1390,9 +1394,12 @@
             if (p <= 0 || n <= 0) return showToast("Enter valid details.");
             const emi = (p * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
             document.getElementById("emi").innerText = "₹" + Math.round(emi).toLocaleString("en-IN");
-            document.getElementById("totalInterest").innerText = "₹" + Math.round(emi * n - p).toLocaleString("en-IN");
+            document.getElementById("totalInterest").innerText = "₹" + Math.round(totalInterest = emi * n - p).toLocaleString("en-IN");
             document.getElementById("totalPayment").innerText = "₹" + Math.round(emi * n).toLocaleString("en-IN");
             document.getElementById("emiResult").style.display = "grid";
+
+            emiData = { loan: p, interest: r * 1200, tenure: n, emi: Math.round(emi) };
+            localStorage.setItem("smartSchemeEMI", JSON.stringify(emiData));
             showToast("EMI Calculated.");
         }
 
@@ -1411,33 +1418,7 @@
             document.getElementById("feedbackText").value = "";
         }
 
-        /* 7. AUTH & NAVIGATION */
-        const pages = document.querySelectorAll(".page");
-        const navLinks = document.querySelectorAll(".nav-link");
-
-        function openPage(pageId) {
-            const page = document.getElementById(pageId);
-            if (!page) return;
-            pages.forEach(p => p.classList.remove("active"));
-            navLinks.forEach(link => link.classList.remove("active"));
-            page.classList.add("active");
-            const nav = document.querySelector(`.nav-link[data-page="${pageId}"]`);
-            if (nav) nav.classList.add("active");
-            closeSideMenu();
-            window.scrollTo({ top: 0, behavior: "smooth" });
-
-            if (pageId === "channelPartner") {
-                setTimeout(() => {
-                    initPartnerMap();
-                    renderPartnerList();
-                    partnerMap?.invalidateSize();
-                }, 100);
-            }
-            if (pageId === "profile") loadProfile();
-        }
-
-        navLinks.forEach(link => link.addEventListener("click", () => openPage(link.dataset.page)));
-
+        /* 7. AUTH LOGIC & PROFILE MANAGEMENT */
         let authMode = "login";
         function showRegisterForm() {
             authMode = "register";
@@ -1488,32 +1469,82 @@
             const email = document.getElementById("authEmail").value.trim();
             const pass = document.getElementById("authPassword").value;
             if (!email || !pass) return showToast("Enter email and password.");
+
             if (authMode === "register") {
-                const name = document.getElementById("authName").value.trim();
-                userData = { name: name || "User", email: email, password: pass };
-                localStorage.setItem("smartSchemeUser", JSON.stringify(userData));
-                showToast("Account created!");
+                const name = document.getElementById("authName").value.trim() || "Registered User";
+                const phone = document.getElementById("authPhone").value.trim();
+                const dob = document.getElementById("authDob").value;
+                currentUser = { name, email, phone, dob };
+                localStorage.setItem("creditaccess_current_user", JSON.stringify(currentUser));
+                showToast("Account created successfully!");
             } else {
+                currentUser = { name: email.split("@")[0], email: email };
+                localStorage.setItem("creditaccess_current_user", JSON.stringify(currentUser));
                 showToast("Login successful!");
             }
-            openPage("home");
+
+            updateAuthUI();
+            openPage("profile");
         }
 
         function logoutUser() {
+            currentUser = null;
+            localStorage.removeItem("creditaccess_current_user");
             showToast("Logged out successfully.");
+            updateAuthUI();
             openPage("loginPage");
         }
 
         function loadProfile() {
-            document.getElementById("profileName").innerText = userData.name || "User";
-            document.getElementById("profileAvatar").innerText = (userData.name || "U").charAt(0).toUpperCase();
+            if (!currentUser) return;
+            document.getElementById("profileName").innerText = currentUser.name || "User";
+            document.getElementById("profileEmailSubtitle").innerText = currentUser.email || "Registered Account";
+            document.getElementById("profileAvatar").innerText = (currentUser.name || "U").charAt(0).toUpperCase();
             document.getElementById("savedCount").innerText = savedSchemes.length;
             document.getElementById("applicationCount").innerText = applications.length;
-            document.getElementById("profileEMI").innerText = "₹" + emiData.emi.toLocaleString("en-IN");
-            
+            document.getElementById("profileEMI").innerText = emiData.emi ? "₹" + emiData.emi.toLocaleString("en-IN") : "₹0";
+
             const sl = document.getElementById("savedList");
-            sl.innerHTML = savedSchemes.map(s => `<p style="padding:6px 0;border-bottom:1px solid #f1f5f9;font-size:13px;">⭐ ${escapeHtml(s)}</p>`).join("");
+            sl.innerHTML = savedSchemes.length
+                ? savedSchemes.map(s => `<p style="padding:6px 0;border-bottom:1px solid #f1f5f9;font-size:13px;">⭐ ${escapeHtml(s)}</p>`).join("")
+                : `<p style="color:#64748b;font-size:13px;">No schemes saved yet.</p>`;
         }
+
+        /* 8. NAVIGATION ROUTING */
+        const pages = document.querySelectorAll(".page");
+        const navLinks = document.querySelectorAll(".nav-link");
+
+        function openPage(pageId) {
+            // Protected profile check
+            if (pageId === "profile" && (!currentUser || !currentUser.email)) {
+                showToast("Please login or register to view your profile!");
+                openPage("loginPage");
+                return;
+            }
+
+            pages.forEach(p => p.classList.remove("active"));
+            navLinks.forEach(link => link.classList.remove("active"));
+
+            const target = document.getElementById(pageId);
+            if (target) target.classList.add("active");
+
+            const nav = document.querySelector(`.nav-link[data-page="${pageId}"]`);
+            if (nav) nav.classList.add("active");
+
+            closeSideMenu();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+
+            if (pageId === "channelPartner") {
+                setTimeout(() => {
+                    initPartnerMap();
+                    renderPartnerList();
+                    partnerMap?.invalidateSize();
+                }, 100);
+            }
+            if (pageId === "profile") loadProfile();
+        }
+
+        navLinks.forEach(link => link.addEventListener("click", () => openPage(link.dataset.page)));
 
         function escapeHtml(v) {
             return String(v).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m]));
@@ -1534,11 +1565,12 @@
         document.getElementById("searchBtn")?.addEventListener("click", performSearch);
         document.getElementById("searchInput")?.addEventListener("keydown", e => { if (e.key === "Enter") performSearch(); });
 
+        /* Voice Recognition */
         function startSearchMic() {
             const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (!SpeechRec) return showToast("Voice input not supported in this browser.");
             const r = new SpeechRec();
-            r.onstart = () => showToast("Listening...");
+            r.onstart = () => showToast("Listening... Speak scheme name.");
             r.onresult = e => {
                 document.getElementById("searchInput").value = e.results[0][0].transcript;
                 performSearch();
@@ -1549,6 +1581,7 @@
         document.addEventListener("DOMContentLoaded", () => {
             renderGovernmentCards();
             renderPartnerList();
+            updateAuthUI();
         });
     </script>
 </body>
