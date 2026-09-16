@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "keywords": ["pm kisan", "kisan samman", "farmer", "kheti"],
+    "scheme_name": "PM Kisan Samman Nidhi",
+    "details": "Under PM Kisan, eligible farmer families receive ₹6,000 per year in three equal installments of ₹2,000 directly into their bank accounts."
+  },
+  {
+    "id": 2,
+    "keywords": ["pm awas", "housing", "ghar", "makaan"],
+    "scheme_name": "Pradhan Mantri Awas Yojana (PMAY)",
+    "details": "PMAY aims to provide pucca houses with basic amenities to all eligible rural and urban households."
+  },
+  {
+    "id": 3,
+    "keywords": ["mudra", "business loan", "loan", "karza"],
+    "scheme_name": "Pradhan Mantri Mudra Yojana (PMMY)",
+    "details": "Provides loans up to ₹10 Lakhs to non-corporate, non-farm small/micro enterprises under Shishu, Kishore, and Tarun categories."
+  },
+  {
+    "id": 4,
+    "keywords": ["ayushman", "health", "insurance", "hospital"],
+    "scheme_name": "Ayushman Bharat PM-JAY",
+    "details": "Provides a health cover of up to ₹5 lakh per family per year for secondary and tertiary care hospitalization to vulnerable families."
+  }
+]
